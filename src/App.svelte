@@ -1,5 +1,6 @@
 <script>
 	export let name;
+   export let project;
 </script>
 
 <style>
@@ -12,4 +13,4 @@
 </style>
 
 <h1>Hello {name}!</h1>
-<h2>This is test project of Sevelte...</h2>
+<h2>This is test project of {project}...</h2>
