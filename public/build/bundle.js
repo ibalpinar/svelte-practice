@@ -94,6 +94,12 @@ var app = (function () {
 	}
 
 	/**
+	 * @returns {Text} */
+	function space() {
+		return text(' ');
+	}
+
+	/**
 	 * @param {Element} node
 	 * @param {string} attribute
 	 * @param {string} [value]
@@ -685,6 +691,11 @@ var app = (function () {
 		let t0;
 		let t1;
 		let t2;
+		let t3;
+		let h2;
+		let t4;
+		let t5;
+		let t6;
 
 		const block = {
 			c: function create() {
@@ -692,8 +703,15 @@ var app = (function () {
 				t0 = text("Hello ");
 				t1 = text(/*name*/ ctx[0]);
 				t2 = text("!");
-				attr_dev(h1, "class", "svelte-i7qo5m");
-				add_location(h1, file, 10, 0, 82);
+				t3 = space();
+				h2 = element("h2");
+				t4 = text("This is test project of ");
+				t5 = text(/*project*/ ctx[1]);
+				t6 = text("...");
+				attr_dev(h1, "class", "svelte-6xpqvv");
+				add_location(h1, file, 14, 0, 130);
+				attr_dev(h2, "class", "svelte-6xpqvv");
+				add_location(h2, file, 15, 0, 153);
 			},
 			l: function claim(nodes) {
 				throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -703,15 +721,23 @@ var app = (function () {
 				append_dev(h1, t0);
 				append_dev(h1, t1);
 				append_dev(h1, t2);
+				insert_dev(target, t3, anchor);
+				insert_dev(target, h2, anchor);
+				append_dev(h2, t4);
+				append_dev(h2, t5);
+				append_dev(h2, t6);
 			},
 			p: function update(ctx, [dirty]) {
 				if (dirty & /*name*/ 1) set_data_dev(t1, /*name*/ ctx[0]);
+				if (dirty & /*project*/ 2) set_data_dev(t5, /*project*/ ctx[1]);
 			},
 			i: noop,
 			o: noop,
 			d: function destroy(detaching) {
 				if (detaching) {
 					detach_dev(h1);
+					detach_dev(t3);
+					detach_dev(h2);
 				}
 			}
 		};
@@ -731,14 +757,19 @@ var app = (function () {
 		let { $$slots: slots = {}, $$scope } = $$props;
 		validate_slots('App', slots, []);
 		let { name } = $$props;
+		let { project } = $$props;
 
 		$$self.$$.on_mount.push(function () {
 			if (name === undefined && !('name' in $$props || $$self.$$.bound[$$self.$$.props['name']])) {
 				console.warn("<App> was created without expected prop 'name'");
 			}
+
+			if (project === undefined && !('project' in $$props || $$self.$$.bound[$$self.$$.props['project']])) {
+				console.warn("<App> was created without expected prop 'project'");
+			}
 		});
 
-		const writable_props = ['name'];
+		const writable_props = ['name', 'project'];
 
 		Object.keys($$props).forEach(key => {
 			if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<App> was created with unknown prop '${key}'`);
@@ -746,25 +777,27 @@ var app = (function () {
 
 		$$self.$$set = $$props => {
 			if ('name' in $$props) $$invalidate(0, name = $$props.name);
+			if ('project' in $$props) $$invalidate(1, project = $$props.project);
 		};
 
-		$$self.$capture_state = () => ({ name });
+		$$self.$capture_state = () => ({ name, project });
 
 		$$self.$inject_state = $$props => {
 			if ('name' in $$props) $$invalidate(0, name = $$props.name);
+			if ('project' in $$props) $$invalidate(1, project = $$props.project);
 		};
 
 		if ($$props && "$$inject" in $$props) {
 			$$self.$inject_state($$props.$$inject);
 		}
 
-		return [name];
+		return [name, project];
 	}
 
 	class App extends SvelteComponentDev {
 		constructor(options) {
 			super(options);
-			init(this, options, instance, create_fragment, safe_not_equal, { name: 0 });
+			init(this, options, instance, create_fragment, safe_not_equal, { name: 0, project: 1 });
 
 			dispatch_dev("SvelteRegisterComponent", {
 				component: this,
@@ -781,12 +814,21 @@ var app = (function () {
 		set name(value) {
 			throw new Error("<App>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
 		}
+
+		get project() {
+			throw new Error("<App>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+		}
+
+		set project(value) {
+			throw new Error("<App>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+		}
 	}
 
 	const app = new App({
 		target: document.body,
 		props: {
-			name: 'world'
+			name: 'world',
+	      project: 'Svelte'
 		}
 	});
 
